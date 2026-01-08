@@ -8,7 +8,7 @@ function App() {
   const [scene, setScene] = useState("Estúdio Branco Profissional");
   const [modelType, setModelType] = useState("Standard");
 
-  // Função preparada para IA real no futuro
+  // Função assíncrona para gerar imagem (simulação)
   const generateImage = async () => {
     if (!image) {
       alert("Envie uma imagem antes de gerar");
@@ -20,15 +20,39 @@ function App() {
     );
 
     try {
-      // Simulação de processamento da IA
+      // Simula processamento da IA
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      setImage(image); // futuramente será a imagem retornada pela IA
+      setImage(image); // futuramente substituir pela URL retornada pela IA
       alert("Imagem gerada com sucesso!");
     } catch (error) {
       console.error(error);
       alert("Erro ao gerar imagem com IA.");
     }
+  };
+
+  // Função para baixar a imagem
+  const downloadImage = () => {
+    if (!image) {
+      alert("Nenhuma imagem para baixar!");
+      return;
+    }
+
+    const link = document.createElement("a");
+    link.href = image;
+    link.download = "lookgram_result.png";
+    link.click();
+  };
+
+  // Função para compartilhar via WhatsApp
+  const shareWhatsApp = () => {
+    if (!image) {
+      alert("Nenhuma imagem para compartilhar!");
+      return;
+    }
+
+    const whatsappUrl = `https://api.whatsapp.com/send?text=Olha a minha peça! ${image}`;
+    window.open(whatsappUrl, "_blank");
   };
 
   return (
@@ -78,11 +102,33 @@ function App() {
           <h2>Resultado</h2>
 
           {image ? (
-            <img
-              src={image}
-              alt="Preview"
-              style={{ maxWidth: "100%", marginTop: "16px" }}
-            />
+            <>
+              <img
+                src={image}
+                alt="Preview"
+                style={{ maxWidth: "100%", marginTop: "16px" }}
+              />
+
+              <div style={{ marginTop: "12px" }}>
+                <button
+                  onClick={downloadImage}
+                  style={{
+                    marginRight: "8px",
+                    padding: "8px 12px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Baixar Imagem
+                </button>
+
+                <button
+                  onClick={shareWhatsApp}
+                  style={{ padding: "8px 12px", cursor: "pointer" }}
+                >
+                  Compartilhar no WhatsApp
+                </button>
+              </div>
+            </>
           ) : (
             <p>Nenhuma imagem enviada</p>
           )}
