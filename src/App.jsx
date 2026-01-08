@@ -4,10 +4,10 @@ import Header from "./components/Header";
 import ImageUploader from "./components/ImageUploader";
 
 function App() {
-  // Estados do app
-  const [image, setImage] = useState(null);          // imagem enviada pelo usuário
-  const [scene, setScene] = useState("Estúdio Branco Profissional"); // cenário
-  const [modelType, setModelType] = useState("Standard");            // tipo de modelo
+  const [image, setImage] = useState(null);
+  const [scene, setScene] = useState("Estúdio Branco Profissional");
+  const [customScene, setCustomScene] = useState(""); // novo campo para cenário personalizado
+  const [modelType, setModelType] = useState("Standard");
 
   // Função para gerar a imagem com IA
   const generateImage = async () => {
@@ -16,20 +16,28 @@ function App() {
       return;
     }
 
-    // Mostra alerta de que está gerando
-    alert(`Gerando imagem com IA...\nCenário: ${scene}\nModelo: ${modelType}`);
+    // Se o usuário digitou um cenário personalizado, usamos ele
+    const finalScene = customScene.trim() !== "" ? customScene : scene;
+
+    alert(`Gerando imagem com IA...\nCenário: ${finalScene}\nModelo: ${modelType}`);
 
     try {
       // =========================
-      // AQUI É ONDE VOCÊ CHAMA A SUA API DE IA (Gemini)
-      // Por enquanto, estamos simulando o retorno
+      // Aqui vai a chamada real da API Gemini
+      // Substitua URL e parâmetros conforme a sua API
       // =========================
-      
-      // Simulação de tempo de processamento
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Exemplo de envio:
+      // const formData = new FormData();
+      // formData.append("file", image);
+      // formData.append("scene", finalScene);
+      // formData.append("modelType", modelType);
+      // const response = await fetch("URL_DA_API_GEMINI", { method: "POST", body: formData });
+      // const data = await response.json();
+      // setImage(data.generatedImageUrl);
 
-      // Atualiza a imagem no preview (simulação)
-      setImage(image); // futuramente substituir pela URL retornada da API
+      // Simulação de processamento
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setImage(image); // futuramente substituir pela URL retornada pela IA
       alert("Imagem gerada com sucesso!");
     } catch (error) {
       console.error(error);
@@ -70,7 +78,7 @@ function App() {
           <h2>Upload da peça</h2>
           <ImageUploader onUpload={setImage} />
 
-          <h3>Cenário</h3>
+          <h3>Cenário (ou digite outro)</h3>
           <select value={scene} onChange={(e) => setScene(e.target.value)}>
             <option>Paris (Urbano Chic)</option>
             <option>Praia Paradisíaca</option>
@@ -78,6 +86,14 @@ function App() {
             <option>Estúdio Branco Profissional</option>
             <option>Loft Moderno</option>
           </select>
+          <br />
+          <input
+            type="text"
+            placeholder="Digite outro cenário aqui..."
+            value={customScene}
+            onChange={(e) => setCustomScene(e.target.value)}
+            style={{ marginTop: "8px", width: "100%", padding: "6px" }}
+          />
 
           <h3>Tipo de modelo</h3>
           <select value={modelType} onChange={(e) => setModelType(e.target.value)}>
