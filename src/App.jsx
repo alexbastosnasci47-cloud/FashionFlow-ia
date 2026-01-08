@@ -6,37 +6,23 @@ import ImageUploader from "./components/ImageUploader";
 function App() {
   const [image, setImage] = useState(null);
   const [scene, setScene] = useState("Estúdio Branco Profissional");
-  const [customScene, setCustomScene] = useState(""); // novo campo para cenário personalizado
+  const [customScene, setCustomScene] = useState(""); // cenário personalizado
   const [modelType, setModelType] = useState("Standard");
 
-  // Função para gerar a imagem com IA
   const generateImage = async () => {
     if (!image) {
       alert("Envie uma imagem antes de gerar");
       return;
     }
 
-    // Se o usuário digitou um cenário personalizado, usamos ele
     const finalScene = customScene.trim() !== "" ? customScene : scene;
 
     alert(`Gerando imagem com IA...\nCenário: ${finalScene}\nModelo: ${modelType}`);
 
     try {
-      // =========================
-      // Aqui vai a chamada real da API Gemini
-      // Substitua URL e parâmetros conforme a sua API
-      // =========================
-      // Exemplo de envio:
-      // const formData = new FormData();
-      // formData.append("file", image);
-      // formData.append("scene", finalScene);
-      // formData.append("modelType", modelType);
-      // const response = await fetch("URL_DA_API_GEMINI", { method: "POST", body: formData });
-      // const data = await response.json();
-      // setImage(data.generatedImageUrl);
-
       // Simulação de processamento
       await new Promise((resolve) => setTimeout(resolve, 1000));
+
       setImage(image); // futuramente substituir pela URL retornada pela IA
       alert("Imagem gerada com sucesso!");
     } catch (error) {
@@ -45,7 +31,6 @@ function App() {
     }
   };
 
-  // Função para baixar a imagem
   const downloadImage = () => {
     if (!image) {
       alert("Nenhuma imagem para baixar!");
@@ -58,7 +43,6 @@ function App() {
     link.click();
   };
 
-  // Função para compartilhar via WhatsApp
   const shareWhatsApp = () => {
     if (!image) {
       alert("Nenhuma imagem para compartilhar!");
@@ -78,30 +62,36 @@ function App() {
           <h2>Upload da peça</h2>
           <ImageUploader onUpload={setImage} />
 
-          <h3>Cenário (ou digite outro)</h3>
-          <select value={scene} onChange={(e) => setScene(e.target.value)}>
+          <h3>Cenário</h3>
+          <select
+            value={scene}
+            onChange={(e) => setScene(e.target.value)}
+            style={{ marginBottom: "8px", width: "100%", padding: "6px" }}
+          >
             <option>Paris (Urbano Chic)</option>
             <option>Praia Paradisíaca</option>
             <option>Jardim Tropical</option>
             <option>Estúdio Branco Profissional</option>
             <option>Loft Moderno</option>
           </select>
-          <br />
+
           <input
             type="text"
-            placeholder="Digite outro cenário aqui..."
+            placeholder="Ou digite outro cenário aqui..."
             value={customScene}
             onChange={(e) => setCustomScene(e.target.value)}
-            style={{ marginTop: "8px", width: "100%", padding: "6px" }}
+            style={{ marginBottom: "12px", width: "100%", padding: "6px" }}
           />
 
           <h3>Tipo de modelo</h3>
-          <select value={modelType} onChange={(e) => setModelType(e.target.value)}>
+          <select
+            value={modelType}
+            onChange={(e) => setModelType(e.target.value)}
+            style={{ marginBottom: "12px", width: "100%", padding: "6px" }}
+          >
             <option>Standard</option>
             <option>Plus</option>
           </select>
-
-          <br /><br />
 
           <button
             onClick={generateImage}
@@ -116,12 +106,20 @@ function App() {
 
           {image ? (
             <>
-              <img src={image} alt="Preview" style={{ maxWidth: "100%", marginTop: "16px" }} />
+              <img
+                src={image}
+                alt="Preview"
+                style={{ maxWidth: "100%", marginTop: "16px" }}
+              />
 
               <div style={{ marginTop: "12px" }}>
                 <button
                   onClick={downloadImage}
-                  style={{ marginRight: "8px", padding: "8px 12px", cursor: "pointer" }}
+                  style={{
+                    marginRight: "8px",
+                    padding: "8px 12px",
+                    cursor: "pointer",
+                  }}
                 >
                   Baixar Imagem
                 </button>
