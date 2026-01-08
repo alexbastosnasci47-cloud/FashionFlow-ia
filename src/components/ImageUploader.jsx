@@ -1,16 +1,22 @@
-export default function ImageUploader({ onUpload }) {
-  function handleChange(event) {
-    const file = event.target.files[0]
+// src/components/ImageUploader.jsx
+import React from "react";
+
+function ImageUploader({ onUpload }) {
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
     if (file) {
-      onUpload(URL.createObjectURL(file))
+      const imageUrl = URL.createObjectURL(file);
+      onUpload(imageUrl);
     }
-  }
+  };
 
   return (
     <input
       type="file"
       accept="image/*"
-      onChange={handleChange}
+      onChange={handleFileChange}
     />
-  )
+  );
 }
+
+export default ImageUploader;
