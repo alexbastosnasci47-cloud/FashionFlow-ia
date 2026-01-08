@@ -13,6 +13,17 @@ function App() {
         <div className="section">
           <h2>Upload da peça</h2>
           <ImageUploader onUpload={setImage} />
+          <button
+  onClick={() => alert("Aqui entra a IA depois")}
+  style={{
+    marginTop: "12px",
+    padding: "10px 16px",
+    cursor: "pointer"
+  }}
+>
+  Gerar imagem com IA
+</button>
+
         </div>
 
         <div className="section">
