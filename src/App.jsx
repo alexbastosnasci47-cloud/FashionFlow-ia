@@ -6,20 +6,26 @@ import ImageUploader from "./components/ImageUploader";
 function App() {
   const [image, setImage] = useState(null);
 
-  // Função separada para gerar a imagem
-  const generateImage = () => {
+  // Função assíncrona preparada para a IA real
+  const generateImage = async () => {
     if (!image) {
       alert("Envie uma imagem antes de gerar");
       return;
     }
 
-    // Simula o processo de IA
     alert("Gerando imagem com IA...");
 
-    setTimeout(() => {
+    try {
+      // Simulação do tempo de processamento da IA
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Depois de "gerar", atualiza a imagem no preview
+      setImage(image); // futuramente substituir pela URL retornada pela IA
       alert("Imagem gerada com sucesso!");
-      setImage(image); // mantém a mesma imagem por enquanto
-    }, 1000);
+    } catch (error) {
+      console.error(error);
+      alert("Erro ao gerar imagem com IA.");
+    }
   };
 
   return (
