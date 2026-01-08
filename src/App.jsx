@@ -5,22 +5,25 @@ import ImageUploader from "./components/ImageUploader";
 
 function App() {
   const [image, setImage] = useState(null);
+  const [scene, setScene] = useState("Estúdio Branco Profissional");
+  const [modelType, setModelType] = useState("Standard");
 
-  // Função assíncrona preparada para a IA real
+  // Função preparada para IA real no futuro
   const generateImage = async () => {
     if (!image) {
       alert("Envie uma imagem antes de gerar");
       return;
     }
 
-    alert("Gerando imagem com IA...");
+    alert(
+      `Gerando imagem com IA...\n\nCenário: ${scene}\nModelo: ${modelType}`
+    );
 
     try {
-      // Simulação do tempo de processamento da IA
+      // Simulação de processamento da IA
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // Depois de "gerar", atualiza a imagem no preview
-      setImage(image); // futuramente substituir pela URL retornada pela IA
+      setImage(image); // futuramente será a imagem retornada pela IA
       alert("Imagem gerada com sucesso!");
     } catch (error) {
       console.error(error);
@@ -37,10 +40,32 @@ function App() {
           <h2>Upload da peça</h2>
           <ImageUploader onUpload={setImage} />
 
+          <h3>Cenário</h3>
+          <select
+            value={scene}
+            onChange={(e) => setScene(e.target.value)}
+          >
+            <option>Paris (Urbano Chic)</option>
+            <option>Praia Paradisíaca</option>
+            <option>Jardim Tropical</option>
+            <option>Estúdio Branco Profissional</option>
+            <option>Loft Moderno</option>
+          </select>
+
+          <h3>Tipo de modelo</h3>
+          <select
+            value={modelType}
+            onChange={(e) => setModelType(e.target.value)}
+          >
+            <option>Standard</option>
+            <option>Plus</option>
+          </select>
+
+          <br /><br />
+
           <button
             onClick={generateImage}
             style={{
-              marginTop: "12px",
               padding: "10px 16px",
               cursor: "pointer",
             }}
