@@ -1,9 +1,13 @@
+import Header from './components/Header'
+
 function App() {
   return (
-    <div className="app-container">
-      <h1>FashionFlow Studio</h1>
-      <p>App React funcionando corretamente 🚀</p>
-    </div>
+    <>
+      <Header />
+      <div className="app-container">
+        <p>App React funcionando corretamente 🚀</p>
+      </div>
+    </>
   )
 }
 
