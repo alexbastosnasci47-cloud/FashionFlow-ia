@@ -5,12 +5,16 @@ function App() {
     <>
       <Header />
 
-      <div style={{ padding: "20px" }}>
-        <h2>Upload da peça</h2>
-        <p>Aqui vamos enviar a imagem</p>
+      <div className="container">
+        <div className="section">
+          <h2>Upload da peça</h2>
+          <p>Aqui vamos enviar a imagem</p>
+        </div>
 
-        <h2>Resultado</h2>
-        <p>Aqui aparecerá a imagem gerada</p>
+        <div className="section">
+          <h2>Resultado</h2>
+          <p>Aqui aparecerá a imagem gerada</p>
+        </div>
       </div>
     </>
   )
