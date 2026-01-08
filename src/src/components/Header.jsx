@@ -1,9 +1,8 @@
-function Header() {
+export default function Header() {
   return (
-    <header style={{ padding: '16px', borderBottom: '1px solid #e5e7eb' }}>
-      <h2>FashionFlow Studio</h2>
+    <header style={{ padding: '20px', textAlign: 'center' }}>
+      <h1>FashionFlow Studio</h1>
+      <p>App React funcionando corretamente 🚀</p>
     </header>
   )
 }
-
-export default Header
