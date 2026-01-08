@@ -4,26 +4,32 @@ import Header from "./components/Header";
 import ImageUploader from "./components/ImageUploader";
 
 function App() {
-  const [image, setImage] = useState(null);
-  const [scene, setScene] = useState("Estúdio Branco Profissional");
-  const [modelType, setModelType] = useState("Standard");
+  // Estados do app
+  const [image, setImage] = useState(null);          // imagem enviada pelo usuário
+  const [scene, setScene] = useState("Estúdio Branco Profissional"); // cenário
+  const [modelType, setModelType] = useState("Standard");            // tipo de modelo
 
-  // Função assíncrona para gerar imagem (simulação)
+  // Função para gerar a imagem com IA
   const generateImage = async () => {
     if (!image) {
       alert("Envie uma imagem antes de gerar");
       return;
     }
 
-    alert(
-      `Gerando imagem com IA...\n\nCenário: ${scene}\nModelo: ${modelType}`
-    );
+    // Mostra alerta de que está gerando
+    alert(`Gerando imagem com IA...\nCenário: ${scene}\nModelo: ${modelType}`);
 
     try {
-      // Simula processamento da IA
+      // =========================
+      // AQUI É ONDE VOCÊ CHAMA A SUA API DE IA (Gemini)
+      // Por enquanto, estamos simulando o retorno
+      // =========================
+      
+      // Simulação de tempo de processamento
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      setImage(image); // futuramente substituir pela URL retornada pela IA
+      // Atualiza a imagem no preview (simulação)
+      setImage(image); // futuramente substituir pela URL retornada da API
       alert("Imagem gerada com sucesso!");
     } catch (error) {
       console.error(error);
@@ -65,10 +71,7 @@ function App() {
           <ImageUploader onUpload={setImage} />
 
           <h3>Cenário</h3>
-          <select
-            value={scene}
-            onChange={(e) => setScene(e.target.value)}
-          >
+          <select value={scene} onChange={(e) => setScene(e.target.value)}>
             <option>Paris (Urbano Chic)</option>
             <option>Praia Paradisíaca</option>
             <option>Jardim Tropical</option>
@@ -77,10 +80,7 @@ function App() {
           </select>
 
           <h3>Tipo de modelo</h3>
-          <select
-            value={modelType}
-            onChange={(e) => setModelType(e.target.value)}
-          >
+          <select value={modelType} onChange={(e) => setModelType(e.target.value)}>
             <option>Standard</option>
             <option>Plus</option>
           </select>
@@ -89,10 +89,7 @@ function App() {
 
           <button
             onClick={generateImage}
-            style={{
-              padding: "10px 16px",
-              cursor: "pointer",
-            }}
+            style={{ padding: "10px 16px", cursor: "pointer" }}
           >
             Gerar imagem com IA
           </button>
@@ -103,20 +100,12 @@ function App() {
 
           {image ? (
             <>
-              <img
-                src={image}
-                alt="Preview"
-                style={{ maxWidth: "100%", marginTop: "16px" }}
-              />
+              <img src={image} alt="Preview" style={{ maxWidth: "100%", marginTop: "16px" }} />
 
               <div style={{ marginTop: "12px" }}>
                 <button
                   onClick={downloadImage}
-                  style={{
-                    marginRight: "8px",
-                    padding: "8px 12px",
-                    cursor: "pointer",
-                  }}
+                  style={{ marginRight: "8px", padding: "8px 12px", cursor: "pointer" }}
                 >
                   Baixar Imagem
                 </button>
