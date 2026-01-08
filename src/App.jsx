@@ -6,6 +6,22 @@ import ImageUploader from "./components/ImageUploader";
 function App() {
   const [image, setImage] = useState(null);
 
+  // Função separada para gerar a imagem
+  const generateImage = () => {
+    if (!image) {
+      alert("Envie uma imagem antes de gerar");
+      return;
+    }
+
+    // Simula o processo de IA
+    alert("Gerando imagem com IA...");
+
+    setTimeout(() => {
+      alert("Imagem gerada com sucesso!");
+      setImage(image); // mantém a mesma imagem por enquanto
+    }, 1000);
+  };
+
   return (
     <>
       <Header />
@@ -16,22 +32,7 @@ function App() {
           <ImageUploader onUpload={setImage} />
 
           <button
-            onClick={() => {
-              if (!image) {
-                alert("Envie uma imagem antes de gerar");
-                return;
-              }
-
-              // Simula processo de IA
-              alert("Gerando imagem com IA...");
-
-              // Aqui você pode futuramente chamar a API da IA
-              // Por enquanto, apenas reexibe a mesma imagem
-              setTimeout(() => {
-                alert("Imagem gerada com sucesso!");
-                setImage(image); // mantém a mesma imagem
-              }, 1000);
-            }}
+            onClick={generateImage}
             style={{
               marginTop: "12px",
               padding: "10px 16px",
