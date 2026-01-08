@@ -4,14 +4,13 @@ import Header from "./components/Header";
 import ImageUploader from "./components/ImageUploader";
 
 function App() {
-  const [image, setImage] = useState(null);               // imagem do upload
-  const [generatedImage, setGeneratedImage] = useState(null); // imagem final da IA
+  const [image, setImage] = useState(null); // imagem do upload
   const [scene, setScene] = useState("Estúdio Branco Profissional");
   const [customScene, setCustomScene] = useState("");
   const [modelType, setModelType] = useState("Standard");
 
-  // Função para gerar a imagem com IA
-  const generateImage = async () => {
+  // Função de geração (simulada)
+  const generateImage = () => {
     if (!image) {
       alert("Envie uma imagem antes de gerar");
       return;
@@ -20,44 +19,32 @@ function App() {
     const finalScene = customScene.trim() !== "" ? customScene : scene;
 
     alert(`Gerando imagem com IA...\nCenário: ${finalScene}\nModelo: ${modelType}`);
-
-    try {
-      // =========================
-      // Aqui vai a chamada real da API Gemini
-      // =========================
-      // Simulação: substituímos a imagem do upload por "gerada"
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      
-      // Atualiza apenas generatedImage, não image
-      setGeneratedImage(image); // futuramente, será a URL retornada pela IA
-      alert("Imagem gerada com sucesso!");
-    } catch (error) {
-      console.error(error);
-      alert("Erro ao gerar imagem com IA.");
-    }
+    
+    // Simulação: não faz download automático
+    // No futuro aqui será substituído pela API real
   };
 
-  // Função para baixar a imagem gerada
+  // Função para baixar a imagem do upload
   const downloadImage = () => {
-    if (!generatedImage) {
+    if (!image) {
       alert("Nenhuma imagem para baixar!");
       return;
     }
 
     const link = document.createElement("a");
-    link.href = generatedImage;
+    link.href = image;
     link.download = "lookgram_result.png";
     link.click();
   };
 
-  // Função para compartilhar a imagem gerada via WhatsApp
+  // Função para compartilhar via WhatsApp
   const shareWhatsApp = () => {
-    if (!generatedImage) {
+    if (!image) {
       alert("Nenhuma imagem para compartilhar!");
       return;
     }
 
-    const whatsappUrl = `https://api.whatsapp.com/send?text=Olha a minha peça! ${generatedImage}`;
+    const whatsappUrl = `https://api.whatsapp.com/send?text=Olha a minha peça! ${image}`;
     window.open(whatsappUrl, "_blank");
   };
 
@@ -112,10 +99,10 @@ function App() {
         <div className="section">
           <h2>Resultado</h2>
 
-          {generatedImage ? (
+          {image ? (
             <>
               <img
-                src={generatedImage}
+                src={image}
                 alt="Preview"
                 style={{ maxWidth: "100%", marginTop: "16px" }}
               />
@@ -123,7 +110,11 @@ function App() {
               <div style={{ marginTop: "12px" }}>
                 <button
                   onClick={downloadImage}
-                  style={{ marginRight: "8px", padding: "8px 12px", cursor: "pointer" }}
+                  style={{
+                    marginRight: "8px",
+                    padding: "8px 12px",
+                    cursor: "pointer",
+                  }}
                 >
                   Baixar Imagem
                 </button>
@@ -137,7 +128,7 @@ function App() {
               </div>
             </>
           ) : (
-            <p>Nenhuma imagem gerada ainda</p>
+            <p>Nenhuma imagem enviada</p>
           )}
         </div>
       </div>
