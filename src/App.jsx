@@ -5,7 +5,15 @@ function App() {
     <>
       <Header />
       <div className="app-container">
-        <p>App React funcionando corretamente 🚀</p>
+        <div className="section">
+          <h3>Upload da peça</h3>
+          <p>Aqui vamos enviar a imagem</p>
+        </div>
+
+        <div className="section">
+          <h3>Resultado</h3>
+          <p>Aqui aparecerá a imagem gerada</p>
+        </div>
       </div>
     </>
   )
