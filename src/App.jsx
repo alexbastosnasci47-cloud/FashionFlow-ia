@@ -1,15 +1,9 @@
 import { useState } from "react"
 import Header from "./components/Header"
+import ImageUploader from "./components/ImageUploader"
 
 function App() {
   const [image, setImage] = useState(null)
-
-  function handleImageUpload(event) {
-    const file = event.target.files[0]
-    if (file) {
-      setImage(URL.createObjectURL(file))
-    }
-  }
 
   return (
     <>
@@ -18,12 +12,7 @@ function App() {
       <div className="container">
         <div className="section">
           <h2>Upload da peça</h2>
-
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-          />
+          <ImageUploader onUpload={setImage} />
         </div>
 
         <div className="section">
