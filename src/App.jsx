@@ -28,16 +28,17 @@ function App() {
     link.href = image;
     link.download = "imagem-gerada.jpg";
     link.click();
- const handleWhatsApp = () => {
-  const siteUrl = window.location.href;
+  };
 
-  const text = encodeURIComponent(
-    `Veja a imagem gerada com IA no FashionFlow!\n\nAcesse aqui:\n${siteUrl}`
-  );
+  const handleWhatsApp = () => {
+    const siteUrl = window.location.href;
 
-  window.open(`https://wa.me/?text=${text}`, "_blank");
-};
+    const text = encodeURIComponent(
+      `Veja a imagem gerada com IA no FashionFlow!\n\nAcesse aqui:\n${siteUrl}`
+    );
 
+    window.open(`https://wa.me/?text=${text}`, "_blank");
+  };
 
   return (
     <>
@@ -91,10 +92,7 @@ function App() {
             </select>
           </div>
 
-          <button
-            onClick={handleGenerate}
-            style={{ marginTop: "20px" }}
-          >
+          <button onClick={handleGenerate} style={{ marginTop: "20px" }}>
             Gerar imagem com IA
           </button>
         </div>
