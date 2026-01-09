@@ -4,13 +4,15 @@ import Header from "./components/Header";
 import ImageUploader from "./components/ImageUploader";
 
 function App() {
-  const [image, setImage] = useState(null); // imagem do upload
-  const [scene, setScene] = useState("Estúdio Branco Profissional"); // select de cenário
-  const [customScene, setCustomScene] = useState(""); // cenário digitado pelo usuário
-  const [modelType, setModelType] = useState("Standard"); // tipo de modelo
+  const [image, setImage] = useState(null); // imagem enviada
+  const [generatedImage, setGeneratedImage] = useState(null); // imagem da IA
+  const [scene, setScene] = useState("Estúdio Branco Profissional");
+  const [customScene, setCustomScene] = useState("");
+  const [modelType, setModelType] = useState("Standard");
+  const [loading, setLoading] = useState(false);
 
-  // Função para gerar a imagem com IA (simulação)
-  const generateImage = () => {
+  // Função para gerar imagem usando API Gemini
+  const generateImage = async () => {
     if (!image) {
       alert("Envie uma imagem antes de gerar");
       return;
@@ -18,37 +20,54 @@ function App() {
 
     const finalScene = customScene.trim() !== "" ? customScene : scene;
 
-    // Primeiro alert: mostrando o que está sendo enviado para a IA
-    alert(`Gerando imagem com IA...\nCenário: ${finalScene}\nModelo: ${modelType}`);
+    setLoading(true);
 
-    // Simulação do retorno da IA: segundo alert
-    setTimeout(() => {
+    try {
+      // === Chamada para API Gemini ===
+      // Substitua 'URL_DA_API_GEMINI' e os headers conforme sua configuração
+      const formData = new FormData();
+      formData.append("file", image);
+      formData.append("scene", finalScene);
+      formData.append("modelType", modelType);
+
+      const response = await fetch("URL_DA_API_GEMINI", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      // data.generatedImageUrl deve conter a URL da imagem final
+      setGeneratedImage(data.generatedImageUrl);
+
       alert("Imagem gerada com sucesso!");
-      // Futuramente aqui, substituiremos pelo setImage ou setGeneratedImage da API real
-    }, 500); // meio segundo depois do primeiro alert
+    } catch (error) {
+      console.error(error);
+      alert("Erro ao gerar imagem com IA.");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // Função para baixar a imagem
   const downloadImage = () => {
-    if (!image) {
+    if (!generatedImage) {
       alert("Nenhuma imagem para baixar!");
       return;
     }
 
     const link = document.createElement("a");
-    link.href = image;
+    link.href = generatedImage;
     link.download = "lookgram_result.png";
     link.click();
   };
 
-  // Função para compartilhar via WhatsApp
   const shareWhatsApp = () => {
-    if (!image) {
+    if (!generatedImage) {
       alert("Nenhuma imagem para compartilhar!");
       return;
     }
 
-    const whatsappUrl = `https://api.whatsapp.com/send?text=Olha a minha peça! ${image}`;
+    const whatsappUrl = `https://api.whatsapp.com/send?text=Olha a minha peça! ${generatedImage}`;
     window.open(whatsappUrl, "_blank");
   };
 
@@ -95,18 +114,19 @@ function App() {
           <button
             onClick={generateImage}
             style={{ padding: "10px 16px", cursor: "pointer" }}
+            disabled={loading}
           >
-            Gerar imagem com IA
+            {loading ? "Gerando..." : "Gerar imagem com IA"}
           </button>
         </div>
 
         <div className="section">
           <h2>Resultado</h2>
 
-          {image ? (
+          {generatedImage ? (
             <>
               <img
-                src={image}
+                src={generatedImage}
                 alt="Preview"
                 style={{ maxWidth: "100%", marginTop: "16px" }}
               />
@@ -132,7 +152,7 @@ function App() {
               </div>
             </>
           ) : (
-            <p>Nenhuma imagem enviada</p>
+            <p>Nenhuma imagem gerada ainda</p>
           )}
         </div>
       </div>
