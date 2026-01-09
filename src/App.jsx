@@ -4,10 +4,9 @@ import Header from "./components/Header";
 import ImageUploader from "./components/ImageUploader";
 
 function App() {
-  // Estados do app
-  const [image, setImage] = useState(null); // imagem enviada pelo usuário
+  const [image, setImage] = useState(null); // imagem do upload
   const [scene, setScene] = useState("Estúdio Branco Profissional"); // select de cenário
-  const [customScene, setCustomScene] = useState(""); // cenário digitado
+  const [customScene, setCustomScene] = useState(""); // cenário digitado pelo usuário
   const [modelType, setModelType] = useState("Standard"); // tipo de modelo
 
   // Função para gerar a imagem com IA (simulação)
@@ -19,13 +18,17 @@ function App() {
 
     const finalScene = customScene.trim() !== "" ? customScene : scene;
 
-    // Apenas alerta simulado, sem download automático
+    // Primeiro alert: mostrando o que está sendo enviado para a IA
     alert(`Gerando imagem com IA...\nCenário: ${finalScene}\nModelo: ${modelType}`);
 
-    // Futuramente aqui será substituído pela chamada real da API Gemini
+    // Simulação do retorno da IA: segundo alert
+    setTimeout(() => {
+      alert("Imagem gerada com sucesso!");
+      // Futuramente aqui, substituiremos pelo setImage ou setGeneratedImage da API real
+    }, 500); // meio segundo depois do primeiro alert
   };
 
-  // Função para baixar a imagem enviada/gerada
+  // Função para baixar a imagem
   const downloadImage = () => {
     if (!image) {
       alert("Nenhuma imagem para baixar!");
